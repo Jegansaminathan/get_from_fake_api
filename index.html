@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 100%;
+        height: auto;
+        border: 2px solid black;
+        padding: 20px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .card {
+        width: 24%;
+        height: 500px;
+        background-color: aquamarine;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .card .zoom {
+        width: 90%;
+        height: 60%;
+        display: flex;
+        background-color: cadetblue;
+        border-radius: 20px;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s linear;
+        overflow: hidden;
+      }
+      .card .zoom img {
+        width: 85%;
+        height: 85%;
+        transition: all 0.3s linear;
+      }
+      .card .dtl {
+        width: 80%;
+        height: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card .dtl .rc {
+        width: 100%;
+        height: 20%;
+        display: flex;
+        justify-content: space-between;
+      }
+      .card:hover .zoom img {
+        transform: scale(1.11, 1.11);
+      }
+      .card:hover .zoom {
+        transform: scale(0.95, 0.95);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <script>
+      let containerref = document.querySelector("div");
+      axios.get("https://fakestoreapi.com/products").then((res) => {
+        let prd = res.data;
+        for (let i of prd) {
+          let cardref = document.createElement("div");
+          cardref.className = "card";
+          cardref.innerHTML = `<div class="zoom">
+          <img
+            src="${i.image}"
+          />
+        </div>
+        <div class="dtl">
+          <h4>${i.title}</h4>
+          <h5>price :<span> ${i.price}</span></h5>
+          <div class="rc">
+            <p>rate: <span>${i.rating.rate}</span></p>
+            <p>count: <span>${i.rating.count}</span></p>
+          </div>
+        </div>`;
+          containerref.appendChild(cardref);
+        }
+      });
+    </script>
+  </body>
+</html>
