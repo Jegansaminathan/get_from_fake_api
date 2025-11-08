@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0%;
+            margin: 0%;
+            box-sizing: border-box;
+        }
+        body{
+            width: 100%;
+        }
+        .continer{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            row-gap: 20px;
+            padding: 2%;
+        }
+        .card{
+            width: 23%;
+            height: 70vh;
+            background-color: bisque;
+            border-radius: 10px;
+            padding: 1% 2%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items:flex-start;
+        }
+        .card:hover{
+            transform: skew(-0.5deg,-1deg);
+            box-shadow:rgba(122, 117, 117, 0.633) 15px 15px 20px;
+        }
+        .frame{
+            align-self: center;
+            transition: all 0.5s linear;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        .card:hover .frame{
+            transform: scale(0.9);
+        }
+        .frame img{
+            width: 250px;
+            transition: all 0.5s linear;
+        }
+        .card:hover .frame img{
+            transform: scale(1.5);
+        }
+        nav{
+            width: 100%;
+            height: 10vh;
+            background-color: rgba(254, 252, 150, 0.693);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size:xx-large;
+        }
+    </style>
+</head>
+<body>
+    <nav>Book Store</nav>
+    <div class="continer">
+    </div>
+    <script>
+        let conr=document.querySelector(".continer")
+        fetch("https://api.itbook.store/1.0/new").then((res)=>res.json())
+        .then((data)=>{
+            let prd=data.books
+            for(let i in prd){
+                let cardr=document.createElement('div')
+                cardr.className="card"
+                cardr.innerHTML=` <div class="frame">
+                <img src="${prd[i].image}">
+            </div>
+            <h4>${prd[i].title}</h4>
+            <p><span>ISBN : <span>${prd[i].isbn13}</p>
+            <h4>Price : ${prd[i].price}</h4>
+            <a href="${prd[i].url}">Know More</a>`
+            conr.appendChild(cardr)
+            } 
+        })
+    </script>
+</body>
+</html>
